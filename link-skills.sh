@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Require bash 4+ for process substitution and associative array support
+if [ "${BASH_VERSINFO[0]}" -lt 4 ]; then
+  echo "ERROR: bash 4+ required (found ${BASH_VERSION}). On macOS, install via: brew install bash"
+  exit 1
+fi
+
 SKILLS_DIR="$(cd "$(dirname "$0")" && pwd)/skills"
 
 # Detect OS and set paths
@@ -31,8 +37,17 @@ mkdir -p "$CLAUDE_SKILLS"
 # Track if any symlink fails (for Windows warning)
 SYMLINK_FAILED=false
 
-for skill_dir in "$SKILLS_DIR"/*/; do
-  skill_name=$(basename "$skill_dir")
+# Check for duplicate skill names across groups
+dupes=$(find "$SKILLS_DIR" -name "SKILL.md" -type f | while IFS= read -r f; do basename "$(dirname "$f")"; done | sort | uniq -d)
+if [ -n "$dupes" ]; then
+  echo "ERROR: Duplicate skill names found: $dupes"
+  exit 1
+fi
+
+# Find all SKILL.md files recursively and link each skill flatly
+while IFS= read -r skill_md; do
+  skill_dir="$(dirname "$skill_md")"
+  skill_name="$(basename "$skill_dir")"
 
   # Remove existing target (directory or symlink) before creating symlink
   rm -rf "$OPENCODE_SKILLS/$skill_name" 2>/dev/null || true
@@ -51,7 +66,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
     echo "Failed to link $CLAUDE_SKILLS/$skill_name"
     SYMLINK_FAILED=true
   fi
-done
+done < <(find "$SKILLS_DIR" -name "SKILL.md" -type f)
 
 # Warn Windows users about symlink issues
 if [ "$SYMLINK_FAILED" = true ]; then

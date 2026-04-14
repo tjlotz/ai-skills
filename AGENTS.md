@@ -36,18 +36,29 @@ A collection of reusable AI agent skills for use with OpenCode and Claude. Skill
 
 ```
 skills/
-  <skill-name>/
-    SKILL.md
-link-skills.sh    — symlinks each skill into OpenCode and Claude skill directories
+  github/            — skills that depend on the `gh` CLI and GitHub issues/PRs
+    scope-it/SKILL.md
+    build-it/SKILL.md
+    review-it/SKILL.md
+    test-it/SKILL.md
+    ship-it/SKILL.md
+  standalone/        — skills with no external dependencies; work anywhere
+    big-brain/SKILL.md
+    cook-bruv/SKILL.md
+    this-sus/SKILL.md
+    roast-it/SKILL.md
+    yeet-it/SKILL.md
+link-skills.sh       — finds all SKILL.md files recursively, symlinks each skill flatly
 README.md
-AGENTS.md         — project context for AI coding agents (Codex, Gemini, etc.)
-CLAUDE.md         — Claude Code entry point; references AGENTS.md
+AGENTS.md            — project context for AI coding agents (Codex, Gemini, etc.)
+CLAUDE.md            — Claude Code entry point; references AGENTS.md
 ```
 
 ---
 
 ## Adding a Skill
 
-1. Create `skills/<skill-name>/SKILL.md`
+1. Create `skills/<group>/<skill-name>/SKILL.md` (use `github/` for skills requiring the `gh` CLI, `standalone/` otherwise)
 2. Ensure `name` in frontmatter matches the directory name exactly
-3. Run `./link-skills.sh` from the repo root to deploy
+3. Skill names must be unique across all groups
+4. Run `./link-skills.sh` from the repo root to deploy
