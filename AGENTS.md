@@ -42,12 +42,15 @@ skills/
     review-it/SKILL.md
     test-it/SKILL.md
     ship-it/SKILL.md
-  standalone/        — skills with no external dependencies; work anywhere
+  npd development/   — dev workflow skills with no external dependencies; work anywhere
     big-brain/SKILL.md
     cook-bruv/SKILL.md
     this-sus/SKILL.md
     roast-it/SKILL.md
     yeet-it/SKILL.md
+  business automation/ — business workflow skills that use MCP connectors (Gmail, Calendar, Jira) and local files
+    weekly-recap/SKILL.md
+      scripts/gather_local.py
 link-skills.sh       — finds all SKILL.md files recursively, symlinks each skill flatly
 README.md
 AGENTS.md            — project context for AI coding agents (Codex, Gemini, etc.)
@@ -58,7 +61,7 @@ CLAUDE.md            — Claude Code entry point; references AGENTS.md
 
 ## Adding a Skill
 
-1. Create `skills/<group>/<skill-name>/SKILL.md` (use `github/` for skills requiring the `gh` CLI, `standalone/` otherwise)
+1. Create `skills/<group>/<skill-name>/SKILL.md` (use `github/` for skills requiring the `gh` CLI, `business automation/` for business workflow skills, `npd development/` for other dev workflow skills)
 2. Ensure `name` in frontmatter matches the directory name exactly
 3. Skill names must be unique across all groups
 4. Run `./link-skills.sh` from the repo root to deploy

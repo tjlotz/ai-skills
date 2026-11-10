@@ -12,15 +12,18 @@ skills/
     review-it/SKILL.md
     test-it/SKILL.md
     ship-it/SKILL.md
-  standalone/        — skills with no external dependencies; work anywhere
+  npd development/   — dev workflow skills with no external dependencies; work anywhere
     big-brain/SKILL.md
     cook-bruv/SKILL.md
     this-sus/SKILL.md
     roast-it/SKILL.md
     yeet-it/SKILL.md
+  business automation/ — business workflow skills that use MCP connectors (Gmail, Calendar, Jira) and local files
+    weekly-recap/SKILL.md
+      scripts/gather_local.py
 ```
 
-Each skill is a directory containing a single `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions. Skills are organized into groups but linked flatly to their destinations.
+Each skill is a directory containing a `SKILL.md` file (plus optional helper scripts) with YAML frontmatter (`name`, `description`) followed by markdown instructions. Skills are organized into groups but linked flatly to their destinations.
 
 ## Setup
 
@@ -50,7 +53,7 @@ Run the script in **Git Bash** (or MSYS2/Cygwin). Symlinks on Windows require on
 
 Follow these steps:
 
-1. Create `skills/<group>/<skill-name>/SKILL.md` (use `github/` for skills requiring the `gh` CLI, `standalone/` otherwise)
+1. Create `skills/<group>/<skill-name>/SKILL.md` (use `github/` for skills requiring the `gh` CLI, `business automation/` for business workflow skills, `npd development/` for other dev workflow skills)
 2. Add a `SKILL.md` with valid frontmatter (`name` must match the directory name)
 3. Skill names must be unique across all groups
 4. Run `bash link-skills.sh`
